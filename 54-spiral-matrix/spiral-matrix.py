@@ -1,30 +1,12 @@
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
-        result = []
-        top, bottom = 0, len(matrix) - 1
-        left, right = 0, len(matrix[0]) - 1
-
-        while top <= bottom and left <= right:
-            # Traverse top row
-            for j in range(left, right + 1):
-                result.append(matrix[top][j])
-            top += 1
-
-            # Traverse right column
-            for i in range(top, bottom + 1):
-                result.append(matrix[i][right])
-            right -= 1
-
-            # Traverse bottom row (if valid)
-            if top <= bottom:
-                for j in range(right, left - 1, -1):
-                    result.append(matrix[bottom][j])
-                bottom -= 1
-
-            # Traverse left column (if valid)
-            if left <= right:
-                for i in range(bottom, top - 1, -1):
-                    result.append(matrix[i][left])
-                left += 1
-
-        return result
+        ans=[]
+        while len(matrix): #Process would be repeated unless the length of matrix becomes zero.
+            try: # Exception handling, in case the pop operation on empty matrix is performed.
+                ans+=matrix.pop(0) #Removing Top Row from matrix and inserting into answer list.
+                ans+=[i.pop() for i in matrix] #Removing Rightmost Column from matrix and inserting into answer list.
+                ans+=matrix.pop()[::-1] #Removing Bottom Row from matrix and inserting into answer list in reverse order.
+                ans+=[i.pop(0) for i in matrix][::-1] #Removing Leftmost Column from matrix and inserting into answers list in reverse order.
+            except:
+                break
+        return ans
